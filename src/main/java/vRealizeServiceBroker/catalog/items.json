@@ -1,0 +1,78 @@
+{
+  "content": [
+    {
+      "id": "82f17a7c-556f-3071-8f24-6eb177e56bfc",
+      "name": "test-2",
+      "description": "",
+      "type": {
+        "id": "com.vmw.blueprint",
+        "link": "/catalog/api/types/com.vmw.blueprint",
+        "name": "VMware Cloud Templates"
+      },
+      "projectIds": [
+        "567bf576-3f4f-4f1b-8fde-a234fc78fe74"
+      ],
+      "createdAt": "2021-08-30T20:44:22.030336Z",
+      "createdBy": "ivanasenc@vmware.com",
+      "lastUpdatedAt": "2021-09-03T17:37:23.932427Z",
+      "lastUpdatedBy": "system-user",
+      "iconId": "1495b8d9-9428-30d6-9626-10ff9281645e",
+      "bulkRequestLimit": 1
+    },
+    {
+      "id": "646f2da7-d345-3106-96f1-74deb7223105",
+      "name": "test-1",
+      "description": "",
+      "type": {
+        "id": "com.vmw.blueprint",
+        "link": "/catalog/api/types/com.vmw.blueprint",
+        "name": "VMware Cloud Templates"
+      },
+      "projectIds": [
+        "567bf576-3f4f-4f1b-8fde-a234fc78fe74"
+      ],
+      "createdAt": "2021-08-30T20:44:22.189767Z",
+      "createdBy": "ivanasenc@vmware.com",
+      "lastUpdatedAt": "2021-09-03T17:37:24.004171Z",
+      "lastUpdatedBy": "system-user",
+      "iconId": "1495b8d9-9428-30d6-9626-10ff9281645e",
+      "bulkRequestLimit": 1
+    }
+  ],
+  "pageable": {
+    "offset": 0,
+    "sort": {
+      "sorted": false,
+      "unsorted": true,
+      "empty": true
+    },
+    "queryInfo": {
+      "customOptions": {},
+      "expand": [],
+      "select": [],
+      "properties": [],
+      "sort": {
+        "sorted": false,
+        "unsorted": true,
+        "empty": true
+      }
+    },
+    "pageNumber": 0,
+    "pageSize": 20,
+    "paged": true,
+    "unpaged": false
+  },
+  "last": true,
+  "totalElements": 2,
+  "totalPages": 1,
+  "first": true,
+  "sort": {
+    "sorted": false,
+    "unsorted": true,
+    "empty": true
+  },
+  "number": 0,
+  "numberOfElements": 2,
+  "size": 20,
+  "empty": false
+}
