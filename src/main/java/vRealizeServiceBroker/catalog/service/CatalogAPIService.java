@@ -4,19 +4,12 @@ import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.*;
+
 import org.springframework.stereotype.Service;
-import org.springframework.util.LinkedMultiValueMap;
-import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponents;
-import org.springframework.web.util.UriComponentsBuilder;
 import vRealizeServiceBroker.catalog.model.BearerToken;
-import vRealizeServiceBroker.catalog.model.Catalog;
 import vRealizeServiceBroker.catalog.model.Item;
 import vRealizeServiceBroker.catalog.model.RefreshToken;
-
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -39,18 +32,25 @@ public class CatalogAPIService {
         this.accessToken = accessToken;
     }
 
-    private BearerToken getBearerToken() {
+    public Item getItemByID(String ID) {
+        return catalogService.findByID(ID).get();
+    }
 
+    private BearerToken getBearerToken() {
         HttpHeaders headers = new HttpHeaders();
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
         RefreshToken refreshToken = new RefreshToken().setRefreshToken(accessToken);
 
         HttpEntity<RefreshToken> entity = new HttpEntity<>(refreshToken, headers);
-        return restTemplate.exchange(
+        BearerToken token =  restTemplate.exchange(
                 apiUrl + "/iaas/api/login",
                 HttpMethod.POST,
                 entity,
                 BearerToken.class).getBody();
+        if(token == null){
+            throw new NullPointerException("Null token");
+        }
+        return token;
     }
 
     private String getTokenFromBearer(){
@@ -62,7 +62,7 @@ public class CatalogAPIService {
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(getTokenFromBearer());
-        headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
+        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
         HttpEntity<JsonNode> entity = new HttpEntity<>(headers);
         JsonNode catalogNode =  restTemplate.exchange(
@@ -71,24 +71,23 @@ public class CatalogAPIService {
                 entity,
                 JsonNode.class).getBody();
 
-        if (catalogNode != null)
-            return catalogNode.at("/content").elements();
-        else
-            return null;
+        if (catalogNode == null)
+            throw new NullPointerException("Null catalog");
+
+       return catalogNode.at("/content").elements();
     }
 
-    public Catalog getCatalogOutOfIterator(){
+    public CatalogService getCatalogOutOfIterator(){
         Iterator<JsonNode> nodeIt = getItemsWithBearerToken();
-        Catalog catalog = new Catalog();
         while(nodeIt.hasNext()){
             JsonNode node = nodeIt.next();
             Item item = new Item()
                     .setId(node.get("id").asText())
                     .setName(node.get("name").asText())
                     .setDescription(node.get("description").asText());
-            catalog.addItem(item);
+            catalogService.save(item);
         }
-        return catalog;
+        return catalogService;
     }
 
 }
