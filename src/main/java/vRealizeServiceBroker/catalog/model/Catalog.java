@@ -18,6 +18,9 @@ public class Catalog {
         this.catalog = catalog;
         return this;
     }
+    public void addItem(Item item){
+        catalog.add(item);
+    }
 
     @Override
     public boolean equals(Object o) {

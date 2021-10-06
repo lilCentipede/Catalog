@@ -12,6 +12,8 @@ import vRealizeServiceBroker.catalog.model.Item;
 import vRealizeServiceBroker.catalog.service.CatalogAPIService;
 import vRealizeServiceBroker.catalog.service.CatalogService;
 
+import java.util.Iterator;
+
 @RestController
 @RequestMapping("/catalog")
 public class CatalogController {
@@ -26,14 +28,11 @@ public class CatalogController {
         return catalogService.findAll();
     }
 
-    @GetMapping("/bearerToken")
-    public String seeBearerToken(){
-        return catalogAPIService.getTokenFromBearer();
-    }
     @GetMapping("/items")
-    public JsonNode seeCatalog(){
-        return catalogAPIService.getItemsWithBearerToken();
+    public Catalog seeCatalog() {
+        return catalogAPIService.getCatalogOutOfIterator();
     }
+
 
 }
 

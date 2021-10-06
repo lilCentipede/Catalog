@@ -17,6 +17,7 @@ import vRealizeServiceBroker.catalog.model.RefreshToken;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -38,10 +39,12 @@ public class CatalogAPIService {
         this.accessToken = accessToken;
     }
 
-    public BearerToken getBearerToken() {
+    private BearerToken getBearerToken() {
+
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
         RefreshToken refreshToken = new RefreshToken().setRefreshToken(accessToken);
+
         HttpEntity<RefreshToken> entity = new HttpEntity<>(refreshToken, headers);
         return restTemplate.exchange(
                 apiUrl + "/iaas/api/login",
@@ -50,22 +53,42 @@ public class CatalogAPIService {
                 BearerToken.class).getBody();
     }
 
-    public String getTokenFromBearer(){
+    private String getTokenFromBearer(){
         BearerToken bearerToken = getBearerToken();
         return bearerToken.getToken();
     }
 
-    public JsonNode getItemsWithBearerToken(){
+    private Iterator<JsonNode> getItemsWithBearerToken(){
+
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(getTokenFromBearer());
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
 
         HttpEntity<JsonNode> entity = new HttpEntity<>(headers);
-        return restTemplate.exchange(
+        JsonNode catalogNode =  restTemplate.exchange(
                 apiUrl + "/catalog/api/items",
                 HttpMethod.GET,
                 entity,
                 JsonNode.class).getBody();
+
+        if (catalogNode != null)
+            return catalogNode.at("/content").elements();
+        else
+            return null;
+    }
+
+    public Catalog getCatalogOutOfIterator(){
+        Iterator<JsonNode> nodeIt = getItemsWithBearerToken();
+        Catalog catalog = new Catalog();
+        while(nodeIt.hasNext()){
+            JsonNode node = nodeIt.next();
+            Item item = new Item()
+                    .setId(node.get("id").asText())
+                    .setName(node.get("name").asText())
+                    .setDescription(node.get("description").asText());
+            catalog.addItem(item);
+        }
+        return catalog;
     }
 
 }
