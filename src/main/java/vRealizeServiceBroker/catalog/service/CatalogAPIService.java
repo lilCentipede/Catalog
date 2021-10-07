@@ -10,30 +10,32 @@ import org.springframework.web.client.RestTemplate;
 import vRealizeServiceBroker.catalog.model.BearerToken;
 import vRealizeServiceBroker.catalog.model.Item;
 import vRealizeServiceBroker.catalog.model.RefreshToken;
+import vRealizeServiceBroker.catalog.repository.CatalogRepository;
+
 import java.util.Iterator;
 import java.util.List;
 
 
 @Service
 public class CatalogAPIService {
-    private final CatalogService catalogService;
+    private final CatalogRepository catalogRepository;
     private final RestTemplate restTemplate;
     private final String apiUrl;
     private final String accessToken;
 
     @Autowired
-    public CatalogAPIService(CatalogService catalogService,
+    public CatalogAPIService(CatalogRepository catalogRepository,
                              RestTemplate restTemplate,
                              @Value("${vRealise.service.broker.api.url}") String apiUrl,
                              @Value("${access.token}") String accessToken) {
-        this.catalogService = catalogService;
+        this.catalogRepository = catalogRepository;
         this.restTemplate = restTemplate;
         this.apiUrl = apiUrl;
         this.accessToken = accessToken;
     }
 
     public Item getItemByID(String ID) {
-        return catalogService.findByID(ID).get();
+        return catalogRepository.findByID(ID).get();
     }
 
     private BearerToken getBearerToken() {
@@ -58,7 +60,7 @@ public class CatalogAPIService {
         return bearerToken.getToken();
     }
 
-    private Iterator<JsonNode> getItemsWithBearerToken(){
+    public Iterator<JsonNode> getItemsWithBearerToken(){
 
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(getTokenFromBearer());
@@ -77,7 +79,7 @@ public class CatalogAPIService {
        return catalogNode.at("/content").elements();
     }
 
-    public CatalogService getCatalogOutOfIterator(){
+    public CatalogRepository getCatalogOutOfIterator(){
         Iterator<JsonNode> nodeIt = getItemsWithBearerToken();
         while(nodeIt.hasNext()){
             JsonNode node = nodeIt.next();
@@ -85,9 +87,9 @@ public class CatalogAPIService {
                     .setId(node.get("id").asText())
                     .setName(node.get("name").asText())
                     .setDescription(node.get("description").asText());
-            catalogService.save(item);
+            catalogRepository.save(item);
         }
-        return catalogService;
+        return catalogRepository;
     }
 
 }

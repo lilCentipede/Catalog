@@ -10,7 +10,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class InMemoryCatalogRepositoryTests {
-    @Test
+   /*
+   @Test
     void doesItReturnAllItemsWith_findAll_with_MockData() {
         var repository = new InMemoryCatalogRepository();
         assertSame(FakeData.CATALOG, repository.findAll());
@@ -46,4 +47,5 @@ public class InMemoryCatalogRepositoryTests {
        assertEquals(repoSize,2);
 
     }
+    */
 }
