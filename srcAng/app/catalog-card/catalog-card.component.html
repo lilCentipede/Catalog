@@ -1,0 +1,47 @@
+<div class="clr-row">
+    <div class="clr-col-lg-5 clr-col-md-8 clr-col-12">
+      <div class="card">
+        <div class="card-header">
+          {{item.name}}
+        </div>
+        <div class="card-block">
+          <div class="card-title">
+            {{item.description}}
+            <br>
+            {{item.projectIds}}
+          </div>
+          <div class="card-text">
+            ...
+          </div>
+        </div>
+        <div class="card-footer">
+          <button class="btn btn-sm btn-link" (click)="onOpenClick()">Request</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+<clr-modal [(clrModalOpen)]="openModal">
+  <h3 class="modal-title">Stuff</h3>
+  <div class="modal-body">
+    <form clrForm [formGroup]="form" >
+      <clr-input-container>
+          <label>ID</label>
+          <input clrInput type="text" name="name" formControlName="id"/>
+      </clr-input-container>
+      <clr-input-container>
+        <label>NAME</label>
+        <input clrInput type="text" name="name" formControlName="name"/>
+    </clr-input-container>
+    <clr-input-container>
+      <label>DESCRIPTION</label>
+      <input clrInput type="number" name="name" formControlName="description"/>
+  </clr-input-container>
+  </form>
+  </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline" (click)="submit()">Submit</button>
+    </div>
+  </clr-modal>
+
+  

@@ -1,0 +1,46 @@
+{
+    "id": "2899f0ba-3a5d-3328-a201-1e1e5a1add31",
+    "name": "Catalog Item with simple inputs",
+    "description": "",
+    "type": {
+        "id": "com.vmw.blueprint",
+        "link": "/catalog/api/types/com.vmw.blueprint",
+        "name": "VMware Cloud Templates"
+    },
+    "projectIds": [
+        "5f2cfa61-4c12-4fe5-970b-c304a760b25d"
+    ],
+    "createdAt": "2021-10-05T18:47:41.270388Z",
+    "createdBy": "ivanasenc@vmware.com",
+    "lastUpdatedAt": "2021-10-06T00:53:29.185991Z",
+    "lastUpdatedBy": "system-user",
+    "schema": {
+        "type": "object",
+        "encrypted": false,
+        "properties": {
+            "aNumber": {
+                "type": "string",
+                "encrypted": false
+            },
+            "aString": {
+                "type": "string",
+                "encrypted": false
+            },
+            "aBoolean": {
+                "type": "boolean",
+                "encrypted": false
+            },
+            "anInteger": {
+                "type": "integer",
+                "encrypted": false
+            }
+        },
+        "required": [
+            "aNumber",
+            "aString",
+            "anInteger"
+        ]
+    },
+    "iconId": "1495b8d9-9428-30d6-9626-10ff9281645e",
+    "bulkRequestLimit": 1
+}

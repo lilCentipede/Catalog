@@ -1,0 +1,22 @@
+[
+    {
+      "id": "2899f0ba-3a5d-3328-a201-1e1e5a1add31",
+      "name": "Catalog Item with simple inputs",
+      "description": ""
+    },
+    {
+      "id": "81a21568-ae95-38c9-b2fb-a73db05e0154",
+      "name": "Catalog Item with all types of inputs",
+      "description": "This catalog item contains all possible input types.\nThe integer input is limited to only 1, 2 and 3"
+    },
+    {
+      "id": "82f17a7c-556f-3071-8f24-6eb177e56bfc",
+      "name": "test-2",
+      "description": ""
+    },
+    {
+      "id": "646f2da7-d345-3106-96f1-74deb7223105",
+      "name": "test-1",
+      "description": ""
+    }
+  ]
