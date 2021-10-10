@@ -8,6 +8,7 @@ import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 import vRealizeServiceBroker.catalog.model.*;
+import vRealizeServiceBroker.catalog.repository.APICatalogRepository;
 import vRealizeServiceBroker.catalog.repository.CatalogRepository;
 
 import java.util.ArrayList;
@@ -17,25 +18,20 @@ import java.util.List;
 
 @Service
 public class CatalogAPIService {
-    private final CatalogRepository catalogRepository;
     private final RestTemplate restTemplate;
     private final String apiUrl;
     private final String accessToken;
-
-
     @Autowired
-    public CatalogAPIService(CatalogRepository catalogRepository,
-                             RestTemplate restTemplate,
+    public CatalogAPIService(RestTemplate restTemplate,
                              @Value("${vRealise.service.broker.api.url}") String apiUrl,
                              @Value("${access.token}") String accessToken) {
-        this.catalogRepository = catalogRepository;
         this.restTemplate = restTemplate;
         this.apiUrl = apiUrl;
         this.accessToken = accessToken;
     }
 
-    public ItemFull getItemByID(String ID) {
-        return catalogRepository.findByID(ID).get();
+    public JsonNode getItemByID(String ID) {
+        return getItemWithBearerToken(ID);
     }
 
     private BearerToken getBearerToken() {
@@ -91,14 +87,12 @@ public class CatalogAPIService {
 
         if (catalogNode == null)
             throw new NullPointerException("Null catalog");
-        System.out.println("yey");
         return catalogNode;
-
     }
 
     public CatalogRepository getCatalogOutOfIterator(){
+        CatalogRepository catalogRepository = new APICatalogRepository();
         List<String> itemIDS = this.getTheIDs();
-        System.out.println(itemIDS);
         for(var itemID : itemIDS) {
             JsonNode node = getItemWithBearerToken(itemID);
             ItemFull item = new ItemFull()
@@ -129,6 +123,7 @@ public class CatalogAPIService {
         }
         return catalogRepository;
     }
+
     public List<String> getTheIDs() {
         List<String> itemIDs = new ArrayList<>();
         Iterator<JsonNode> nodeIt = getCatalogWithBearerToken();

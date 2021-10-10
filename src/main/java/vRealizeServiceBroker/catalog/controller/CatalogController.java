@@ -13,6 +13,7 @@ import java.util.Iterator;
 @RequestMapping("/catalog")
 public class CatalogController {
 
+
     @Autowired
     private CatalogAPIService catalogAPIService;
 
@@ -27,7 +28,7 @@ public class CatalogController {
     }
 
     @GetMapping("/items/{id}")
-    public ItemFull seeItemByID(@PathVariable String id){
+    public JsonNode seeItemByID(@PathVariable String id){
         return catalogAPIService.getItemByID(id);
     }
 

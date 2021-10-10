@@ -7,4 +7,5 @@ public interface Repository<T , ID> {
     Optional<T> findByID(ID id);
     T save(T entity);
     void delete(T entity);
+    void deleteAll();
 }

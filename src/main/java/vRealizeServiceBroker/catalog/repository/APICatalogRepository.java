@@ -1,5 +1,6 @@
 package vRealizeServiceBroker.catalog.repository;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
 import vRealizeServiceBroker.catalog.model.Item;
@@ -44,6 +45,11 @@ public class APICatalogRepository  implements CatalogRepository{
     @Override
     public void delete(ItemFull item){
         catalog.remove(item);
+    }
+
+    @Override
+    public void deleteAll(){
+        catalog.clear();
     }
 }
 
