@@ -30,8 +30,16 @@ public class CatalogAPIService {
         this.accessToken = accessToken;
     }
 
-    public JsonNode getItemByID(String ID) {
-        return getItemWithBearerToken(ID);
+
+
+    private List<String> getTheIDs() {
+        List<String> itemIDs = new ArrayList<>();
+        Iterator<JsonNode> nodeIt = getCatalogWithBearerToken();
+        while(nodeIt.hasNext()) {
+            JsonNode node = nodeIt.next();
+            itemIDs.add(node.get("id").asText());
+        }
+        return itemIDs;
     }
 
     private BearerToken getBearerToken() {
@@ -56,35 +64,32 @@ public class CatalogAPIService {
         return bearerToken.getToken();
     }
 
-    public Iterator<JsonNode> getCatalogWithBearerToken(){
+    public JsonNode getItemByID(String ID) {
+        return getItemWithBearerToken(ID);
+    }
+
+    public JsonNode makeHeader(String plusUrl){
         HttpHeaders headers = new HttpHeaders();
         headers.setBearerAuth(getTokenFromBearer());
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
 
         HttpEntity<JsonNode> entity = new HttpEntity<>(headers);
-        JsonNode catalogNode =  restTemplate.exchange(
-                apiUrl + "/catalog/api/items",
+        return  restTemplate.exchange(
+                apiUrl + plusUrl,
                 HttpMethod.GET,
                 entity,
                 JsonNode.class).getBody();
 
+    }
+    public Iterator<JsonNode> getCatalogWithBearerToken(){
+        JsonNode catalogNode = makeHeader("/catalog/api/items");
         if (catalogNode == null)
             throw new NullPointerException("Null catalog");
-
        return catalogNode.at("/content").elements();
     }
     public JsonNode getItemWithBearerToken(String withID){
-        HttpHeaders headers = new HttpHeaders();
-        headers.setBearerAuth(getTokenFromBearer());
-        headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-
-        HttpEntity<JsonNode> entity = new HttpEntity<>(headers);
-        JsonNode catalogNode =  restTemplate.exchange(
-                apiUrl + "/catalog/api/items" + "/" + withID,
-                HttpMethod.GET,
-                entity,
-                JsonNode.class).getBody();
-
+        String path = "/catalog/api/items" +"/" +  withID;
+        JsonNode catalogNode = makeHeader(path);
         if (catalogNode == null)
             throw new NullPointerException("Null catalog");
         return catalogNode;
@@ -124,14 +129,7 @@ public class CatalogAPIService {
         return catalogRepository;
     }
 
-    public List<String> getTheIDs() {
-        List<String> itemIDs = new ArrayList<>();
-        Iterator<JsonNode> nodeIt = getCatalogWithBearerToken();
-        while(nodeIt.hasNext()) {
-            JsonNode node = nodeIt.next();
-            itemIDs.add(node.get("id").asText());
-        }
-        return itemIDs;
-    }
+
+
 
 }

@@ -1,15 +1,15 @@
 package vRealizeServiceBroker.catalog.service;
 
-import vRealizeServiceBroker.catalog.model.Item;
+import vRealizeServiceBroker.catalog.model.ItemFull;
 
 import java.util.Optional;
 
 public interface CatalogService {
-    Iterable<Item> findAll();
+    Iterable<ItemFull> findAll();
 
-    Optional<Item> findByID(String id);
+    Optional<ItemFull> findByID(String id);
 
-    Item save(Item item);
+    ItemFull save(ItemFull item);
 
-    void delete(Item item);
+    void delete(ItemFull item);
 }

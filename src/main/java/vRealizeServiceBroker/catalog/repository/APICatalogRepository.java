@@ -1,9 +1,7 @@
 package vRealizeServiceBroker.catalog.repository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Repository;
-import vRealizeServiceBroker.catalog.model.Item;
 import vRealizeServiceBroker.catalog.model.ItemFull;
 
 import java.util.ArrayList;

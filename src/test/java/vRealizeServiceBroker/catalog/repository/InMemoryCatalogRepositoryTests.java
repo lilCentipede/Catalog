@@ -1,12 +1,6 @@
 package vRealizeServiceBroker.catalog.repository;
 
-import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import vRealizeServiceBroker.catalog.model.Item;
-
-import java.util.Collection;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 public class InMemoryCatalogRepositoryTests {
