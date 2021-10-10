@@ -1,6 +1,6 @@
 package vRealizeServiceBroker.catalog.repository;
 
-import vRealizeServiceBroker.catalog.model.Item;
+import vRealizeServiceBroker.catalog.model.ItemFull;
 
-public interface CatalogRepository extends Repository<Item,String> {
+public interface CatalogRepository extends Repository<ItemFull,String> {
 }
