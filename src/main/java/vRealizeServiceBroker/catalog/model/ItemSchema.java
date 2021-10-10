@@ -2,11 +2,56 @@ package vRealizeServiceBroker.catalog.model;
 
 import com.fasterxml.jackson.databind.JsonNode;
 
+import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
+import java.util.List;
 import java.util.Objects;
 
 public class ItemSchema {
+    private String type;
+    private Boolean encrypted;
+    private JsonNode properties;
+    private List<String> required;
+
+    @Override
+    public String toString() {
+        return "ItemSchema{" +
+                "type='" + type + '\'' +
+                ", encrypted=" + encrypted +
+                ", properties=" + properties +
+                ", required=" + required +
+                '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        ItemSchema that = (ItemSchema) o;
+        return Objects.equals(type, that.type) && Objects.equals(encrypted, that.encrypted) && Objects.equals(properties, that.properties) && Objects.equals(required, that.required);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(type, encrypted, properties, required);
+    }
+
+
+
+    public List<String> getRequired() {
+        return required;
+    }
+
+    public ItemSchema setRequired(JsonNode _required) {
+        this.required = new ArrayList<>();
+        if(_required.isArray()){
+            for(var el : _required){
+                this.required.add(el.asText());
+            }
+        }
+        return this;
+    }
+
 
     public String getType() {
         return type;
@@ -35,49 +80,12 @@ public class ItemSchema {
         return this;
     }
 
-    public String[] getRequired() {
-        return required;
-    }
-
-    public ItemSchema setRequired(String[] required) {
-        this.required = required;
-        return this;
-    }
-    public ItemSchema setAll(String _type, Boolean _encrypted, JsonNode _properties){
+    public ItemSchema setAll(String _type, Boolean _encrypted, JsonNode _properties,JsonNode _required){
         type = _type;
         encrypted = _encrypted;
         properties = _properties;
+        this.setRequired(_required);
         return this;
     }
 
-    private String type;
-    private Boolean encrypted;
-    private JsonNode properties;
-
-    @Override
-    public String toString() {
-        return "ItemSchema{" +
-                "type='" + type + '\'' +
-                ", encrypted=" + encrypted +
-                ", properties=" + properties +
-                ", required=" + Arrays.toString(required) +
-                '}';
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemSchema that = (ItemSchema) o;
-        return Objects.equals(type, that.type) && Objects.equals(encrypted, that.encrypted) && Objects.equals(properties, that.properties) && Arrays.equals(required, that.required);
-    }
-
-    @Override
-    public int hashCode() {
-        int result = Objects.hash(type, encrypted, properties);
-        result = 31 * result + Arrays.hashCode(required);
-        return result;
-    }
-
-    private String[] required;
 }

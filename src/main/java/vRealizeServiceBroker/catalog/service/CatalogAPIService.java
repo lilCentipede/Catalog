@@ -119,6 +119,7 @@ public class CatalogAPIService {
                             node.get("schema").get("type").asText()
                             ,node.get("schema").get("encrypted").asBoolean()
                             ,node.get("schema").get("properties")
+                            ,node.get("schema").get("required")
                             ))
                     .setIconID(node.get("iconId").asText())
                     .setBulkedRequestLimit(node.get("bulkRequestLimit").asInt());

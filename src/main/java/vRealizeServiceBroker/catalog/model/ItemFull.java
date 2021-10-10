@@ -20,25 +20,6 @@ public class ItemFull {
     private String iconID;
     private Integer bulkedRequestLimit;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ItemFull itemFull = (ItemFull) o;
-        return Objects.equals(id, itemFull.id) && Objects.equals(name, itemFull.name)
-                && Objects.equals(description, itemFull.description) && Objects.equals(type, itemFull.type)
-                && Objects.equals(projectIds, itemFull.projectIds) && Objects.equals(createdAt, itemFull.createdAt)
-                && Objects.equals(createdBy, itemFull.createdBy)
-                && Objects.equals(lastUpdatedAt, itemFull.lastUpdatedAt)
-                && Objects.equals(getLastUpdatedBy, itemFull.getLastUpdatedBy)
-                && Objects.equals(schema, itemFull.schema)
-                && Objects.equals(iconID, itemFull.iconID) && Objects.equals(bulkedRequestLimit, itemFull.bulkedRequestLimit);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, name, description, type, projectIds, createdAt, createdBy, lastUpdatedAt, getLastUpdatedBy,  iconID, bulkedRequestLimit);
-    }
 
     public String getId() {
         return id;
@@ -47,25 +28,6 @@ public class ItemFull {
     public ItemFull setId(String id) {
         this.id = id;
         return this;
-    }
-
-    @Override
-    public String
-    toString() {
-        return "ItemFull{" +
-                "id='" + id + '\'' +
-                ", name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", type=" + type +
-                ", projectIds=" + projectIds +
-                ", createdAt='" + createdAt + '\'' +
-                ", createdBy='" + createdBy + '\'' +
-                ", lastUpdatedAt='" + lastUpdatedAt + '\'' +
-                ", getLastUpdatedBy='" + getLastUpdatedBy + '\'' +
-                ", schema=" + schema +
-                ", iconID='" + iconID + '\'' +
-                ", bulkedRequestLimit=" + bulkedRequestLimit +
-                '}';
     }
 
     public String getName() {
@@ -77,7 +39,7 @@ public class ItemFull {
         return this;
     }
 
-    public String getDecription() {
+    public String getDescription() {
         return description;
     }
 
