@@ -1,6 +1,7 @@
 package vRealizeServiceBroker.catalog.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import vRealizeServiceBroker.catalog.model.ItemFull;
@@ -32,10 +33,15 @@ public class CatalogController {
         return catalogAPIService.getItemByID(id);
     }
 
-    @GetMapping("hello")
-    public String hello(){
-        return "Hello";
+    @PostMapping("/deployment")
+    public JsonNode receiveDeployment(@RequestBody JsonNode body){
+       return catalogAPIService.postDeployment(body.get("id").asText(),body.get("body"));
+
     }
+
+
+
+
 
 
 

@@ -7,8 +7,10 @@
         <div class="card-block">
           <div class="card-title">
             {{item.description}}
+            
+          
+            
             <br>
-            {{item.projectIds}}
           </div>
           <div class="card-text">
             ...
@@ -26,17 +28,13 @@
   <div class="modal-body">
     <form clrForm [formGroup]="form" >
       <clr-input-container>
-          <label>ID</label>
-          <input clrInput type="text" name="name" formControlName="id"/>
+          <label>PROJECT ID</label>
+          <input clrInput type="text" name="name" formControlName="projectName"/>
       </clr-input-container>
       <clr-input-container>
-        <label>NAME</label>
-        <input clrInput type="text" name="name" formControlName="name"/>
+        <label>DEPLOYMENT NAME</label>
+        <input clrInput type="text" name="name" formControlName="deploymentName"/>
     </clr-input-container>
-    <clr-input-container>
-      <label>DESCRIPTION</label>
-      <input clrInput type="number" name="name" formControlName="description"/>
-  </clr-input-container>
   </form>
   </div>
     <div class="modal-footer">

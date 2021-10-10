@@ -1,5 +1,5 @@
 export class ItemType{
-    public id : String;
-    public link : String;
-    public name : String;
+    public id : string;
+    public link : string;
+    public name : string;
 }

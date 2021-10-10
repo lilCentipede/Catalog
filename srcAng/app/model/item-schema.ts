@@ -1,9 +1,8 @@
 import { Input } from "@angular/core";
 
 export class ItemSchema{
-   
-        type: String;
+        type: string;
         encrypted: boolean;
-        properties: Map<String,Input>;
-        required: String[];
+        properties: string;
+        required: string[];
 }

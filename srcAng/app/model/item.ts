@@ -3,17 +3,16 @@ import { ItemSchema } from "./item-schema";
 import { ItemType } from "./item-type";
 
 export class Item{
-    id : String;
-    name : String;
-    description : String;
+    id : string;
+    name : string;
+    description : string;
     type : ItemType;
-    projectIds : String[];
-    createdAt : String;
-    createdBy: String;
+    projectIds : string[];
+    createdAt : string;
+    createdBy: string;
     lastUpdatedAt : Date;
-    lastUpdatedBy : String;
-    //schema : ItemSchema;
-    iconID : String;
+    lastUpdatedBy : string;
+    schema : ItemSchema;
+    iconID : string;
     bulkRequestLimit : Number;
-
 }

@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { Deployment } from '../model/deployment';
 import { Item } from '../model/item';
 import { CatalogService } from '../services/catalog.service';
 
@@ -10,32 +11,53 @@ import { CatalogService } from '../services/catalog.service';
 })
 export class CatalogCardComponent implements OnInit {
   @Input() public item :Item;
+  public entriesOfProperty : Map<String,unknown>
   public form : FormGroup = new FormGroup({});
   public openModal : boolean = false;
 
-  constructor(public catalogService : CatalogService, public form_builder : FormBuilder){
+  constructor(public catalogService : CatalogService , public form_builder : FormBuilder){
     this.form = form_builder.group({
-      id : '',
-      name : '',
-      description : ''
+      projectName : '',
+      deploymentName : ''
     })
   }
 
   ngOnInit(): void {
     this.form.patchValue({
-      id : this.item.id,
-      name : this.item.name,
-      description: this.item.description
+      projectName : this.item.projectIds[0],
       });
   }
-
+  setEntriesOfProperty(){
+    const itemProperties = JSON.parse(this.item.schema.properties);
+    Object.entries(itemProperties).forEach((entry)=>
+     { const [key,value] = entry
+      this.entriesOfProperty.set(key,value);
+     }
+    )
+  }
+ 
   onOpenClick(){
-    
     this.openModal = true;
   }
-  submit(){
+  submit() : any{
     this.openModal = false;
-   
-  }
+    var deployBody = {
+          "id" : "646f2da7-d345-3106-96f1-74deb7223105" ,
+          "body": {
+          "bulkRequestCount": 1,
+          "deploymentName": "FAKEDeployment",
+          "inputs": {},
+          "projectId": "5f2cfa61-4c12-4fe5-970b-c304a760b25d",
+          "reason": "idk",
+          "version": "1"
+         }
+        };
+    deployBody.id=this.item.id;
+    deployBody.body.deploymentName = this.form.controls['deploymentName'].value;
+    deployBody.body.projectId = this.form.controls['projectName'].value;
 
+
+    this.catalogService.makeDeployment(deployBody);
+}
+  
 }
